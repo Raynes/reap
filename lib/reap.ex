@@ -17,16 +17,22 @@ defmodule Reap do
 
   defp parse_body(resp, {:ok, body, _}) do
     case JSEX.decode body do
-      {:ok, encoded} -> {:ok, encoded}
-      _              -> {:error, resp}
+      {:ok, encoded} ->
+        if Dict.has_key?(encoded, "error") do
+          {:error, :refheap, encoded}
+        else
+          {:ok, encoded}
+        end
+      _              -> {:error, :json, resp}
     end
   end
-  defp parse_body(resp, _), do: resp
+  defp parse_body(_, {:error, {:closed, ""}}), do: {:ok, []} # There is no body
+  defp parse_body(resp, _), do: resp # The world has ended
 
   defp extract(resp) do
     case resp do
       {:ok, _, _, client} -> parse_body resp, :hackney.body(client)
-      _                   -> resp
+      _                   -> {:error, :http, resp}
     end
   end
 
