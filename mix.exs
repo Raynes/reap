@@ -3,7 +3,7 @@ defmodule Reap.Mixfile do
 
   def project do
     [ app: :reap,
-      version: "0.1.1-dev",
+      version: "0.1.1",
       elixir: "~> 0.10.0",
       deps: deps ]
   end
@@ -16,7 +16,7 @@ defmodule Reap.Mixfile do
   # Returns the list of dependencies in the format:
   # { :foobar, "0.1", git: "https://github.com/elixir-lang/foobar.git" }
   defp deps do
-    [{:hackney, ">= 0.4.2", github: "benoitc/hackney"},
+    [{:hackney, ">= 0.4.2", github: "benoitc/hackney", ref: "05c5aa94b8fc18050d210292de09307254804b82"},
      {:jsex, ">= 0.0.1", github: "talentdeficit/jsex"}]
   end
 end
