@@ -4,8 +4,6 @@ defmodule Reap do
   API.
   """
 
-  @base_url "https://www.refheap.com/api"
-
   defp to_string(value) when is_atom(value), do: atom_to_binary value
   defp to_string(value) do
     if is_binary value do
@@ -39,13 +37,13 @@ defmodule Reap do
   @doc """
   Make a refheap API request.
   """
-  def request(method, endpoint, params // []) do
+  def request(method, endpoint, params // [], api_url // "https://www.refheap.com/api") do
     params = lc {k, v} inlist params, do: {to_string(k), to_string(v)}
     body = if method == :post do {:form, params} else "" end
     url = if method == :post do
-      @base_url <> endpoint
+      api_url <> endpoint
     else
-      "#{@base_url}#{endpoint}?#{URI.encode_query(params)}"
+      "#{api_url}#{endpoint}?#{URI.encode_query(params)}"
     end
     extract :hackney.request(method, url, [{"Content-Type", "application/json"}], body)
   end
