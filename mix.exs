@@ -3,7 +3,7 @@ defmodule Reap.Mixfile do
 
   def project do
     [ app: :reap,
-      version: "0.1.2-dev",
+      version: "0.1.2",
       elixir: "~> 0.10.0",
       deps: deps ]
   end
