@@ -4,15 +4,6 @@ defmodule Reap do
   API.
   """
 
-  defp to_string(value) when is_atom(value), do: atom_to_binary value
-  defp to_string(value) do
-    if is_binary value do
-      value
-    else
-      inspect value
-    end
-  end
-
   defp parse_body(resp, {:ok, body, _}) do
     case JSEX.decode body do
       {:ok, encoded} ->
@@ -37,8 +28,8 @@ defmodule Reap do
   @doc """
   Make a refheap API request.
   """
-  def request(method, endpoint, params // [], api_url // "https://www.refheap.com/api") do
-    params = lc {k, v} inlist params, do: {to_string(k), to_string(v)}
+  def request(method, endpoint, params \\ [], api_url \\ "https://www.refheap.com/api") do
+    params = for {k, v} <- params, do: {to_string(k), to_string(v)}
     body = if method == :post do {:form, params} else "" end
     url = if method == :post do
       api_url <> endpoint
