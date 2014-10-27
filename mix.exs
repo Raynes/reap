@@ -6,10 +6,9 @@ defmodule Reap.Mixfile do
      version: "0.1.3",
      deps: deps,
      author: "Anthony Grimes",
-     package: [links: ["https://github.com/Raynes/reap"],
-               contributors: [],
+     package: [contributors: [],
                licenses: ["MIT"],
-               links: [github: "https://github.com/Raynes/reap"]],
+               links: %{"github" => "https://github.com/Raynes/reap"}],
      description: "A library for working with the refheap API",]
   end
 
